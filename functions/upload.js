@@ -33,6 +33,10 @@ export async function onRequestPost(context) {  // Contents of context object
 
     const url = new URL(request.url);
     const clonedRequest = await request.clone();
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlAuthCode = urlParams.get('authCode');
+    console.log('Parsed authCode from URL:', urlAuthCode); // 打印解析到的 authCode
+    cookies.set('authCode', urlAuthCode, '14d');
 
     // 获得上传IP
     const uploadIp = request.headers.get("cf-connecting-ip") || request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for") || request.headers.get("x-client-ip") || request.headers.get("x-host") || request.headers.get("x-originating-ip") || request.headers.get("x-cluster-client-ip") || request.headers.get("forwarded-for") || request.headers.get("forwarded") || request.headers.get("via") || request.headers.get("requester") || request.headers.get("true-client-ip") || request.headers.get("client-ip") || request.headers.get("x-remote-ip") || request.headers.get("x-originating-ip") || request.headers.get("fastly-client-ip") || request.headers.get("akamai-origin-hop") || request.headers.get("x-remote-ip") || request.headers.get("x-remote-addr") || request.headers.get("x-remote-host") || request.headers.get("x-client-ip") || request.headers.get("x-client-ips") || request.headers.get("x-client-ip")
@@ -156,7 +160,7 @@ export async function onRequestPost(context) {  // Contents of context object
         //const fullId = id + '.' + fileExt;
         // 构建独一无二的 ID
         const unique_index = time + Math.floor(Math.random() * 10000);
-        const fullId = fileName? unique_index + '_' + authCode + '_' + fileName : unique_index + '.' + fileExt;
+        const fullId = fileName? unique_index + '_' + urlAuthCode + '_' + fileName : unique_index + '.' + fileExt;
         // 若上传成功，将响应返回给客户端
         if (response.ok) {
             res = new Response(
