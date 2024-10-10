@@ -156,7 +156,18 @@ export async function onRequestPost(context) {  // Contents of context object
         //const fullId = id + '.' + fileExt;
         // 构建独一无二的 ID
         const unique_index = time + Math.floor(Math.random() * 10000);
-        const fullId = authCode + '.' + fileExt;
+	const now = new Date();
+	const formatter = new Intl.DateTimeFormat('zh-CN', {
+	    timeZone: 'Asia/Shanghai', // 设置时区为北京时间
+	    year: 'numeric',
+	    month: '2-digit',
+	    day: '2-digit'
+	});
+	
+	// 格式化日期为 YYYY-MM-DD
+	const formattedDate = formatter.format(now);
+	console.log('Today\'s date (Beijing time):', formattedDate);
+        const fullId = formattedDate + '/' + authCode + '.' + fileExt;
         // 若上传成功，将响应返回给客户端
         if (response.ok) {
             res = new Response(
