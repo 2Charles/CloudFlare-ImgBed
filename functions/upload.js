@@ -156,6 +156,7 @@ export async function onRequestPost(context) {  // Contents of context object
         //const fullId = id + '.' + fileExt;
         // 构建独一无二的 ID
         const unique_index = time + Math.floor(Math.random() * 10000);
+<<<<<<< HEAD
 	const now = new Date();
 	const formatter = new Intl.DateTimeFormat('zh-CN', {
 	    timeZone: 'Asia/Shanghai', // 设置时区为北京时间
@@ -172,6 +173,9 @@ export async function onRequestPost(context) {  // Contents of context object
 	const formattedDate = `${year}${month}${day}`;
 	console.log('Today\'s date (Beijing time):', formattedDate);
         const fullId = formattedDate + '_' + authCode + '.' + fileExt;
+=======
+        const fullId = fileName? unique_index + '_' + authCode + '_' + fileName : unique_index + '.' + fileExt;
+>>>>>>> aa47f88 (password)
         // 若上传成功，将响应返回给客户端
         if (response.ok) {
             res = new Response(
