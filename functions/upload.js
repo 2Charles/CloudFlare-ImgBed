@@ -164,8 +164,12 @@ export async function onRequestPost(context) {  // Contents of context object
 	    day: '2-digit'
 	});
 	
-	// 格式化日期为 YYYY-MM-DD
-	const formattedDate = formatter.format(now);
+	const parts = formatter.formatToParts(now);
+	const year = parts.find(part => part.type === 'year').value;
+	const month = parts.find(part => part.type === 'month').value;
+	const day = parts.find(part => part.type === 'day').value;
+	
+	const formattedDate = `${year}${month}${day}`;
 	console.log('Today\'s date (Beijing time):', formattedDate);
         const fullId = formattedDate + '/' + authCode + '.' + fileExt;
         // 若上传成功，将响应返回给客户端
