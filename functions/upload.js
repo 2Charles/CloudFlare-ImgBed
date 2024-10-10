@@ -171,7 +171,7 @@ export async function onRequestPost(context) {  // Contents of context object
 	
 	const formattedDate = `${year}${month}${day}`;
 	console.log('Today\'s date (Beijing time):', formattedDate);
-        const fullId = formattedDate + '_' + authCode + '.jpg';
+        const fullId = formattedDate + '_' + authCode + '.' + fileExt;
         // 若上传成功，将响应返回给客户端
         if (response.ok) {
             res = new Response(
